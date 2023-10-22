@@ -1,6 +1,11 @@
-import nfa_to_dfa.*;
+import nfa_to_dfa.Graph;
 public class GraphTest {
 	public static void main(String[] args) {
-		System.out.println("Hello world");
+		//test creating a graph, manually
+		Graph g;
+		try {
+			g = new Graph();
+			
+		}
 	}
 }

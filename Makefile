@@ -3,6 +3,9 @@ build:
 	touch build/manifest.txt
 	javac nfa_to_dfa/*.java && jar cvfm build/NFA_TO_DFA.jar build/manifest.txt nfa_to_dfa/*.class
 
+build_docs:
+	javadoc -d ./docs nfa_to_dfa/*.java
+	
 test: build
 	javac -cp ./build/NFA_TO_DFA.jar test/GraphTest.java
 	java -cp ./test GraphTest

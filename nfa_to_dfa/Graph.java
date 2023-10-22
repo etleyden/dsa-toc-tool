@@ -2,33 +2,51 @@ package nfa_to_dfa;
 
 import java.util.ArrayList;
 
+/**
+ * While intended to be a parent class for the DFA class, the NFA class, and others, 
+ * the Graph class can be utilized in many applications. Utilizes {@link Node}, {@link GraphEdge}
+ * 
+ * @see GraphEdge
+ * @see Node
+ * @see DFA
+ * @see NFA
+ * @author Ethan Leyden 
+ */
 public class Graph {
-    private ArrayList<ArrayList<String>> adj; //adjacency matrix with transition labels
-    private ArrayList<String> nodes; //node labels, where their index represents the index in the adj matrix
+    private ArrayList<ArrayList<GraphEdge>> adj; //adjacency matrix with edges
+    private ArrayList<Node> nodes; //node labels, where their index represents the index in the adj matrix
+    private int num_nodes = 0;
+    /**
+     * Creates a new Graph object with no nodes or (obviously) edges between nodes.
+     */
     public Graph() {
         this.adj = new ArrayList<>();
         this.nodes = new ArrayList<>();
     }
     /**
-     * @param nodes the list of nodes w/ string names, where the location in the string array corresponds to the location on the adjacency matrix
-     * @param adj the adjacency matrix to initialize the graph with
+     * Add a new node to the graph. The node automatically gets assigned an int id. 
      */
-    public Graph(ArrayList<String> nodes, ArrayList<ArrayList<String>> adj) {
-        this.nodes = nodes;
-        this.adj = adj;
-    }
-    /**
-     * 
-     * @param nodes the list of nodes w/ string names which correspond to their location in the adjacency matrix
-     */
-    public Graph(ArrayList<String> nodes) {
-        this.nodes = nodes;
-        this.adj = new ArrayList<>();
-        for(int i = 0; i < nodes.size(); i++) {
-            this.adj.add(new ArrayList<>());
+    public void addNode(String node) {
+        Node newNode = new Node(node, num_nodes);
+        num_nodes++;
+        nodes.add(newNode);
+        adj.add(new ArrayList<>());
+        for(int i = 0; i < adj.size(); i++) {
+            ArrayList<Transition> row = adj.get(i);
+            while(row.size() <= num_nodes) {
+                adj.add(new GraphEdge()); // make sure every row has enough edges to make a complete matrix
+            }
         }
     }
-    public void addNode(String node) {
-        nodes.add(node);
+    /**
+     * Make sure a passed adjacency list is eligible to be for this graph
+     */
+    private boolean validateAdjSize(ArrayList<String> adj) {
+        if(adj.size() == num_nodes) {
+            for(int i = 0; i < num_nodes; i++) {
+                if(adj.get(i).size() != num_nodes){ return false;}
+            }
+        }
+        return true;
     }
 }

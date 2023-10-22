@@ -1,10 +1,11 @@
 # NFA_TO_DFA
 
-The goal of this project is to become a library which can be used (for educational purposes) to learn about Computational Theory topics like Regular Languages, and Context-Free languages. This `README.md` serves as the documentation for the library.
+The goal of this project is to become a library which can be used (for educational purposes) to learn about Computational Theory topics like Regular Languages, and Context-Free languages. Documentation for this library can be found in `docs/`
 
 ## Using the library
 
 The library can be compiled with `make build`
+Updating the documentation with any changes you've made can be done with `make build_docs`
 
 ## Contributing to the library
 
@@ -23,3 +24,8 @@ This project is in infancy, so there is still a lot to contribute. Here are some
  * Methods to read `.txt` files which can generate and perform operations on DFAs, NFAs, and be validated by a Regex
  * Methods to read `.txt` files which can generate and perform operations on PDAs, CFGs, and convert CFGs to CNF. 
  * Methods to set up and simulate a Turing Machine by utlizing the API for tape reads/writes as well as moving up and down the tape. 
+
+ ### Naming convention
+
+ Private fields should use `snake_case`
+ Variables which are local to a function or otherwise exist temporarily should use `camelCase`
