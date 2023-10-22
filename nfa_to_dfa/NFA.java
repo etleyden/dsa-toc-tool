@@ -1,4 +1,4 @@
-package nfa_to_dfa
+package nfa_to_dfa;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class NFA extends Graph {
 
     public NFA(String path) {
+        super(); // added temporarily to test out build settings
         try {
             File text_file = new File(path);
             Scanner reader = new Scanner(text_file);
@@ -18,7 +19,6 @@ public class NFA extends Graph {
             System.out.println("NOT FOUND");
             e.printStackTrace();
         }
-
     }
 
 }
