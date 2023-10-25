@@ -9,12 +9,21 @@ public class Node {
 		private String label;
 		private int id;
 		private Node();
+		/**
+		 * Create a Node with only a string label
+		 */
 		public Node(String label) {
 			this.label = label;
 		}
+		/**
+		 * Create a Node with only an int id. 
+		 */
 		public Node(int id) {
 			this.id = id;
 		}
+		/**
+		 * Create a Node with both a string label and an int id
+		 */
 		public Node(String label, int id) {
 			this.label = label;
 			this.id = id;
