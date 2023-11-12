@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"nfa_to_dfa","l":"DFA"},{"p":"nfa_to_dfa","l":"Graph"},{"p":"nfa_to_dfa","l":"GraphEdge"},{"p":"nfa_to_dfa","l":"NFA"},{"p":"nfa_to_dfa","l":"Node"}];updateSearchResults();
