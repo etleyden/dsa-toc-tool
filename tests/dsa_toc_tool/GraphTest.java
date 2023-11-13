@@ -85,7 +85,20 @@ class GraphTest {
     }
 
     @Test
-    void addEdge() {
+    void setEdge() {
+        //There are four setEdge() methods
+        //setting weight with id, setting weight with label, setting label with id, and setting label with label
+        Graph g = new Graph();
+        //Setting weight with id
+        g.addNode(0);
+        g.addNode(1);
+        g.addNode(2);
+        g.addNode(3);
+        g.setEdge(3, 1, 2);
+        g.setEdge(3, 2, 6);
+        g.setEdge(2, 1, 9);
+        g.setEdge(1, 0, 5);
+        g.setEdge(2, 0, 8);
 
     }
 

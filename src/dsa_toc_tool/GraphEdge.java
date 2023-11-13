@@ -35,13 +35,16 @@ public class GraphEdge {
 		this.weight = weight;
 		return true;
 	}
-	public int getWeight() {
-		return weight;
+	public Integer getWeight() {
+		if (this.isWeight) {
+			return weight;
+		} else {
+			return null;
+		}
 	}
-
 	/**
 	 * Sets the label of the GraphEdge
-	 * @param label
+	 * @param label a string label
 	 * @return true if successful, false if the edge is a weighted edge (and not a labelled edge)
 	 */
 	public boolean setLabel(String label) {
@@ -49,6 +52,10 @@ public class GraphEdge {
 		if(isNull) isNull = false;
 		this.label = label;
 		return true;
+	}
+	public String getLabel() {
+		if(!this.isLabel) return null;
+		return this.label;
 	}
 	public boolean isLabel() {
 		return this.isLabel;

@@ -1,8 +1,6 @@
 package dsa_toc_tool;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 //TODO: Adjust class to support undirected graphs as well
 //TODO: Design graph to either use String labels OR int ids, but not both
 
@@ -17,6 +15,7 @@ import java.util.Map;
  * @author Ethan Leyden 
  */
 public class Graph {
+    private boolean isDirected;
     private ArrayList<ArrayList<GraphEdge>> adj; //adjacency matrix with edges
     private ArrayList<Node> nodes; //node labels, where their index represents the index in the adj matrix
     private GraphEdge.Type edgeType;
@@ -35,15 +34,16 @@ public class Graph {
      * Creates a new weighted-edge Graph object with no nodes or (obviously) edges between nodes.
      */
     public Graph() {
-        this(GraphEdge.Type.WEIGHTED);
+        this(GraphEdge.Type.WEIGHTED, false);
     }
 
     /**
      * Creates an empty Graph with specified edge type.
      * @param edgeType
      */
-    public Graph(GraphEdge.Type edgeType) {
+    public Graph(GraphEdge.Type edgeType, boolean isDirected) {
         this.edgeType = edgeType;
+        this.isDirected = isDirected;
         this.adj = new ArrayList<>();
         this.nodes = new ArrayList<>();
         this.idx = new HashMap<>();
@@ -143,6 +143,7 @@ public class Graph {
         return idx.containsKey(id);
     }
     // --------- EDGES -----------
+    //TODO: Implement Edge direction
     /**
      * Sets an edge weight between two nodes, given their ids.
      * @param u_id the id of the node the edge is from
@@ -193,7 +194,41 @@ public class Graph {
         int v_id = ids.get(v_label);
         return setEdge(u_id, v_id, label);
     }
+
     public String toString() {
-        return "";
+        StringBuilder out = new StringBuilder();
+        ListIterator<Node> node_iterator = this.nodes.listIterator();
+        Iterator<ArrayList<GraphEdge>> adj_iterator = this.adj.iterator();
+        out.append("Nodes,");
+        //Add the node tuples
+        while(node_iterator.hasNext()) {
+            Node current_node = node_iterator.next();
+            out.append(String.format("(%d, %s)", current_node.getId(), current_node.getLabel()));
+            if(node_iterator.hasNext()) out.append(",");
+        }
+        out.append("\n");
+
+        //move node iterator back to the beginning
+        while(node_iterator.hasPrevious()) node_iterator.previous();
+        while(adj_iterator.hasNext()) {
+            Node current_node = node_iterator.next();
+            out.append(String.format("(%d %s)", current_node.getId(), current_node.getLabel()));
+            Iterator<GraphEdge> row_iterator = adj_iterator.next().iterator();
+            while(row_iterator.hasNext()) {
+                GraphEdge edge = row_iterator.next();
+
+                if(edge.isNull) {
+                    out.append("null");
+                } else if(edge.isLabel()) {
+                    out.append(edge.getLabel());
+                } else {
+                    out.append(edge.getWeight());
+                }
+
+                if(row_iterator.hasNext()) out.append(",");
+            }
+            out.append("\n");
+        }
+        return out.toString();
     }
 }
