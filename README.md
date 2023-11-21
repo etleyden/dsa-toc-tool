@@ -1,20 +1,11 @@
-# NFA_TO_DFA
+# DSA/TOC Tool
 
-The goal of this project is to become a library which can be used (for educational purposes) to learn about Computational Theory topics like Regular Languages, and Context-Free languages. Documentation for this library can be found in `docs/`
-
-## Using the library
-
-The library can be compiled with `make build`
-Updating the documentation with any changes you've made can be done with `make build_docs`
-
-## Contributing to the library
-
-The library `.java` files are located in `nfa_to_dfa/`. 
+The goal of this project is to provide an educational tool to learn/practice CS topics surrounding
+data structures, algorithms, and the theory of computation. 
 
 ### Tests
 
 * To write tests, you can add test files to `test/`, or modify the existing tests. 
-* To run tests, you can either run `make test` to run the pre-existing (hard-coded) test files, or write your own Makefile which runs your new test files. To add your test file to the hard-coded (I'm so sorry) tests, please file an Issue on this repository. 
 
 ### TODO
 
@@ -29,3 +20,5 @@ This project is in infancy, so there is still a lot to contribute. Here are some
 
  Private fields should use `snake_case`
  Variables which are local to a function or otherwise exist temporarily should use `camelCase`
+ Class member functions should use `camelCase`, per Java convention.
+ 

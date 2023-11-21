@@ -39,7 +39,7 @@ public class Graph {
 
     /**
      * Creates an empty Graph with specified edge type.
-     * @param edgeType
+     * @param edgeType GraphEdge.Type is an enum that will define edges as weighted or labelled
      */
     public Graph(GraphEdge.Type edgeType, boolean isDirected) {
         this.edgeType = edgeType;
@@ -154,6 +154,7 @@ public class Graph {
     public boolean setEdge(int u_id, int v_id, int weight) {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
+        if(!isDirected) adj.get(v_idx).get(u_idx).setWeight(weight);
         return adj.get(u_idx).get(v_idx).setWeight(weight);
     }
     /**
@@ -179,6 +180,7 @@ public class Graph {
     public boolean setEdge(int u_id, int v_id, String label) {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
+        if(!isDirected) adj.get(v_idx).get(u_idx).setLabel(label);
         return adj.get(u_idx).get(v_idx).setLabel(label);
     }
 

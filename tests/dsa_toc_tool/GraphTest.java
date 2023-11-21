@@ -54,7 +54,7 @@ class GraphTest {
 
     @Test
     void getNodeLabel() {
-        Graph g = new Graph(GraphEdge.Type.WEIGHTED);
+        Graph g = new Graph(GraphEdge.Type.WEIGHTED, true);
         g.addNode("A"); //the id should be assigned 0 automatically
         g.addNode("Z"); //the id should be assigned 1 automatically
         g.addNode("B");
@@ -102,4 +102,5 @@ class GraphTest {
 
     }
 
+    //TODO: Test directed vs undirect graphs
 }
