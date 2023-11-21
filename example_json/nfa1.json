@@ -1,0 +1,13 @@
+{
+  "dsa_type": "nfa",
+  "num_states":  5,
+  "start_numbering": 1,
+  "input_alphabet": ["0", "1"],
+  "start_state": 0,
+  "accept_states": [4],
+  "transitions": {
+    "1": [ ["0", "1"], ["1", "1"], ["1", "2"] ],
+    "2": [ ["0", "3"], ["", "3"]],
+    "3": [ ["1", "4"], ["0", "4"], ["1", "4"]]
+  }
+}

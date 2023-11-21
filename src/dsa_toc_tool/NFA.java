@@ -2,6 +2,9 @@ package dsa_toc_tool;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.*;
 
 public class NFA extends Graph {
 
