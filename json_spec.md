@@ -1,7 +1,9 @@
 # How to write JSON for dsa_toc_tool
 
 Creating input example data structures for this library are really easy
-as we have provided a JSON specification for each data structure, described below:
+as we have provided a JSON specification for each data structure, described below.
+The DSA type needs to be declared as `dsa_type`, with each type having its own value. 
+
 
 ## DFA
 
