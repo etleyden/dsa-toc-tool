@@ -181,8 +181,8 @@ public class Graph {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
         if (!isDirected)
-            adj.get(v_id).get(u_id).setWeight(weight);
-        return adj.get(u_id).get(v_id).setWeight(weight);
+            adj.get(v_idx).get(u_idx).setWeight(weight);
+        return adj.get(u_idx).get(v_idx).setWeight(weight);
     }
 
     /**
@@ -211,8 +211,8 @@ public class Graph {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
         if (!isDirected)
-            adj.get(v_id).get(u_id).setLabel(label);
-        return adj.get(u_id).get(v_id).setLabel(label);
+            adj.get(v_idx).get(u_idx).setLabel(label);
+        return adj.get(u_idx).get(v_idx).setLabel(label);
     }
 
     /**

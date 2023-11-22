@@ -1,9 +1,6 @@
 package dsa_toc_tool;
 
-import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.lang.reflect.Array;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.*;
@@ -86,7 +83,6 @@ public class NFA {
             e.printStackTrace();
         }
     }
-
     /**
      * Verifies a transition between two states and a given input
      * 
