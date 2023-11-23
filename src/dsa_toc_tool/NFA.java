@@ -2,13 +2,19 @@ package dsa_toc_tool;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.lang.reflect.Array;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.*;
 
 public class NFA extends Graph {
+    private int num_states;
+    private int start_num;
+    private JSONArray input_alphabet;
+    private int start_state;
+    private JSONArray accept_states;
+    private JSONArray transitions;
 
     /**
      * Takes the filepath to a .json description of the NFA, and generates an
@@ -18,25 +24,54 @@ public class NFA extends Graph {
      */
     public NFA(String filepath) {
         super(); // added temporarily to test out build settings
-        try {
-            JSONParser parser = new JSONParser();
-            Object obj = parser.parse(new FileReader(filepath)); // the location of the file
-            JSONObject jsonObject = (JSONObject) obj;
-            JSONArray numbers = (JSONArray) jsonObject.get("numbers");
+        parseFile(filepath);
+    }
 
-            for (Object number : numbers) {
-                JSONObject jsonNumber = (JSONObject) number;
-                String natural = (String) jsonNumber.get("natural");
-                System.out.println(natural);
+    public NFA() {
+
+    }
+
+    /**
+     * Parse JSON file into NFA
+     * 
+     * @param filePath path of JSON file
+     */
+    public void parseFile(String filepath) {
+        try {
+            JSONParser p = new JSONParser();
+            JSONObject o = (JSONObject) p.parse(new FileReader(filepath));
+            String dsa_type = (String) o.get("dsa_type");
+            if (!(dsa_type.equals("nfa"))) {
+                throw new Exception();
+            }
+            this.num_states = (int) (long) o.get("num_states");
+            this.start_num = (int) (long) o.get("start_numbering");
+            this.input_alphabet = (JSONArray) o.get("input_alphabet");
+            this.start_state = (int) (long) o.get("start_state");
+            this.accept_states = (JSONArray) o.get("accept_states");
+            this.transitions = (JSONArray) o.get("transitions");
+            for (int i = start_num; i <= num_states; i++) {
+                this.addNode(i);
+                System.out.println("Node " + i + " " + nodeExists(i));
+            }
+            for (int i = 0; i < transitions.size(); i++) {
+                JSONArray transition = (JSONArray) transitions.get(i);
+                int curr_state = i + 1;
+                for (int j = 0; j < transition.size(); j++) {
+                    JSONArray pair = (JSONArray) transition.get(j);
+                    String input = (String) pair.get(0);
+                    int next_state = (int) (long) pair.get(1);
+                    if ((input.equals(""))) {
+                        setEdge(curr_state, next_state, input);
+                    } else {
+                        setEdge(curr_state, next_state, Integer.parseInt(input));
+                    }
+                }
             }
         } catch (Exception e) {
             System.out.println("Error");
             e.printStackTrace();
         }
-    }
-
-    public NFA() {
-
     }
 
     /**
@@ -47,7 +82,21 @@ public class NFA extends Graph {
      * @param endState   the end state
      * @return true if the transition exists, false if not
      */
-    public boolean hasTransition(int startState, char input, int endState) {
+    public boolean hasTransition(int startState, String input, int endState) {
+        for (int i = 0; i < transitions.size(); i++) {
+            int curr_state = i + 1;
+            if (curr_state == startState) {
+                JSONArray transition = (JSONArray) transitions.get(i);
+                for (int j = 0; j < transition.size(); j++) {
+                    JSONArray pair = (JSONArray) transition.get(j);
+                    String inp = (String) pair.get(0);
+                    int next_state = (int) (long) pair.get(1);
+                    if ((inp.equals(input)) && next_state == endState) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
