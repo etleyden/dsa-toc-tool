@@ -17,11 +17,13 @@ public class GraphEdge {
 		this.weight = weight;
 		this.isLabel = false;
 		this.isWeight = true;
+		this.isNull = false;
 	}
 	public GraphEdge(String label) {
 		this.label = label;
 		this.isLabel = true;
 		this.isWeight = false;
+		this.isNull = false;
 	}
 
 	/**

@@ -229,6 +229,18 @@ public class Graph {
         return setEdge(u_id, v_id, label);
     }
 
+    public GraphEdge getEdge(int u_id, int v_id) {
+        int u_idx = idx.get(u_id);
+        int v_idx = idx.get(v_id);
+        return adj.get(u_idx).get(v_idx);
+    }
+
+    public GraphEdge getEdge(String u_label, String v_label) {
+        int u_id = ids.get(u_label);
+        int v_id = ids.get(v_label);
+        return getEdge(u_id, v_id);
+    }
+
     public String toString() {
         StringBuilder out = new StringBuilder();
         ListIterator<Node> node_iterator = this.nodes.listIterator();
