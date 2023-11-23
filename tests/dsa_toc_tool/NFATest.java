@@ -1,10 +1,9 @@
-package dsa_toc_tool;
+import dsa_toc_tool.NFA;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NFATest {
-
 
     @Test
     void hasTransition() {

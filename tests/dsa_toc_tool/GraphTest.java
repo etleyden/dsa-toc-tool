@@ -1,4 +1,4 @@
-package dsa_toc_tool;
+import dsa_toc_tool.*;
 
 import org.junit.jupiter.api.Test;
 

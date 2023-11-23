@@ -8,13 +8,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.*;
 
-public class NFA extends Graph {
+public class NFA {
+    private Graph transitions;
     private int num_states;
     private int start_num;
     private JSONArray input_alphabet;
     private int start_state;
     private JSONArray accept_states;
-    private JSONArray transitions;
 
     /**
      * Takes the filepath to a .json description of the NFA, and generates an
@@ -23,16 +23,25 @@ public class NFA extends Graph {
      * @param filepath the relative path to the json file.
      */
     public NFA(String filepath) {
-        super(); // added temporarily to test out build settings
         parseFile(filepath);
     }
 
+    /**
+     * Default construct for NFA that requires no .json description
+     */
     public NFA() {
-
+        this.transitions = new Graph();
+        this.num_states = 0;
+        this.start_num = 0;
+        this.input_alphabet = new JSONArray();
+        this.start_state = -1;
+        this.accept_states = new JSONArray();
     }
 
     /**
-     * Parse JSON file into NFA
+     * Parse .json description into NFA object
+     * Adds nodes to NFA's graph object according to states
+     * Adds edges to nodes of NFA's graph object
      * 
      * @param filePath path of JSON file
      */
@@ -49,22 +58,21 @@ public class NFA extends Graph {
             this.input_alphabet = (JSONArray) o.get("input_alphabet");
             this.start_state = (int) (long) o.get("start_state");
             this.accept_states = (JSONArray) o.get("accept_states");
-            this.transitions = (JSONArray) o.get("transitions");
+            JSONArray trans = (JSONArray) o.get("transitions");
             for (int i = start_num; i <= num_states; i++) {
-                this.addNode(i);
-                System.out.println("Node " + i + " " + nodeExists(i));
+                transitions.addNode(i);
             }
-            for (int i = 0; i < transitions.size(); i++) {
-                JSONArray transition = (JSONArray) transitions.get(i);
+            for (int i = 0; i < trans.size(); i++) {
+                JSONArray transition = (JSONArray) trans.get(i);
                 int curr_state = i + 1;
                 for (int j = 0; j < transition.size(); j++) {
                     JSONArray pair = (JSONArray) transition.get(j);
                     String input = (String) pair.get(0);
                     int next_state = (int) (long) pair.get(1);
                     if ((input.equals(""))) {
-                        setEdge(curr_state, next_state, input);
+                        transitions.setEdge(curr_state, next_state, input);
                     } else {
-                        setEdge(curr_state, next_state, Integer.parseInt(input));
+                        transitions.setEdge(curr_state, next_state, Integer.parseInt(input));
                     }
                 }
             }
