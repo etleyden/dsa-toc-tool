@@ -46,7 +46,7 @@ class GraphTest {
             String fake_label;
             do {
                 fake_label = EthansUtilities.randomString(5);
-            } while(Objects.equals(fake_label, label_a) && Objects.equals(fake_label, label_b));
+            } while (Objects.equals(fake_label, label_a) && Objects.equals(fake_label, label_b));
             assertFalse(g.nodeExists(fake_label));
         }
 
@@ -55,13 +55,14 @@ class GraphTest {
     @Test
     void getNodeLabel() {
         Graph g = new Graph(GraphEdge.Type.WEIGHTED, true);
-        g.addNode("A"); //the id should be assigned 0 automatically
-        g.addNode("Z"); //the id should be assigned 1 automatically
+        g.addNode("A"); // the id should be assigned 0 automatically
+        g.addNode("Z"); // the id should be assigned 1 automatically
         g.addNode("B");
         assertEquals("A", g.getNodeLabel(0));
         assertEquals("Z", g.getNodeLabel(1));
         assertEquals("B", g.getNodeLabel(2));
-        // Testing how the graph class handles collisions between a pre-existing label and its id
+        // Testing how the graph class handles collisions between a pre-existing label
+        // and its id
         g.addNode(10);
         assertEquals("E", g.getNodeLabel(10));
     }
@@ -72,9 +73,11 @@ class GraphTest {
         g.addNode(255);
         g.addNode(55);
         g.addNode("2");
-        //TODO: Adding a node with a label "5" and then adding a node with an integer value 5 is possible
-        //This is potentially confusing and can lead to errors. This should be prevented in source
-        //and tested for.
+        // TODO: Adding a node with a label "5" and then adding a node with an integer
+        // value 5 is possible
+        // This is potentially confusing and can lead to errors. This should be
+        // prevented in source
+        // and tested for.
 
         // since a node with id 2 should already exist, this should return null
         assertTrue(Objects.isNull(g.addNode(2)));
@@ -86,10 +89,11 @@ class GraphTest {
 
     @Test
     void setEdge() {
-        //There are four setEdge() methods
-        //setting weight with id, setting weight with label, setting label with id, and setting label with label
+        // There are four setEdge() methods
+        // setting weight with id, setting weight with label, setting label with id, and
+        // setting label with label
         Graph g = new Graph();
-        //Setting weight with id
+        // Setting weight with id
         g.addNode(0);
         g.addNode(1);
         g.addNode(2);
@@ -102,5 +106,5 @@ class GraphTest {
 
     }
 
-    //TODO: Test directed vs undirect graphs
+    // TODO: Test directed vs undirect graphs
 }

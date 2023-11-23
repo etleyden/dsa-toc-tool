@@ -6,8 +6,8 @@
   "start_state": 1,
   "accept_states": [2],
   "transitions": [
-    [1, 2],
-    [3, 2],
-    [2, 2]
+     [1, 2] ,
+    [3, 2] ,
+     [2, 2] 
   ]
 }
