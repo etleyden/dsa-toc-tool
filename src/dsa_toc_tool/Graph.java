@@ -232,7 +232,7 @@ public class Graph {
     public GraphEdge getEdge(int u_id, int v_id) {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
-        return adj.get(v_idx).get(u_idx);
+        return adj.get(u_idx).get(v_idx);
     }
 
     public GraphEdge getEdge(String u_label, String v_label) {

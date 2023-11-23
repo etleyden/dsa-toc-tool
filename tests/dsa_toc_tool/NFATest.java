@@ -1,5 +1,6 @@
 import dsa_toc_tool.NFA;
 
+import dsa_toc_tool.NFA;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
