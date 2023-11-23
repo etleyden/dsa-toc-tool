@@ -6,13 +6,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.*;
 
 public class NFA {
-    private Graph graph;
+    private Graph transitions;
     private int num_states;
     private int start_num;
     private JSONArray input_alphabet;
     private int start_state;
     private JSONArray accept_states;
-    private JSONArray transitions;
 
     /**
      * Takes the filepath to a .json description of the NFA, and generates an
@@ -29,7 +28,7 @@ public class NFA {
      * Default construct for NFA that requires no .json description
      */
     public NFA() {
-        this.graph = new Graph();
+        this.transitions = new Graph();
         this.num_states = 0;
         this.start_num = 0;
         this.input_alphabet = new JSONArray();
@@ -57,24 +56,22 @@ public class NFA {
             this.input_alphabet = (JSONArray) o.get("input_alphabet");
             this.start_state = (int) (long) o.get("start_state");
             this.accept_states = (JSONArray) o.get("accept_states");
-            JSONArray transitions = (JSONArray) o.get("transitions");
+            JSONArray trans = (JSONArray) o.get("transitions");
             for (int i = start_num; i <= num_states; i++) {
-                // Adds nodes to graph
-                graph.addNode(i);
+                transitions.addNode(i);
             }
-            for (int i = 0; i < transitions.size(); i++) {
-                JSONArray transition = (JSONArray) transitions.get(i);
-                int curr_state = i + start_num;
+            for (int i = 0; i < trans.size(); i++) {
+                JSONArray transition = (JSONArray) trans.get(i);
+                int curr_state = i + 1;
                 for (int j = 0; j < transition.size(); j++) {
                     JSONArray pair = (JSONArray) transition.get(j);
                     // Grabs input of Edge and destination from JSON pair
                     String input = (String) pair.get(0);
                     int next_state = (int) (long) pair.get(1);
-                    // Determines whether to setEdge with weight or label
-                    if (input.matches("\\d+")) {
-                        graph.setEdge(curr_state, next_state, Integer.parseInt(input));
+                    if ((input.equals(""))) {
+                        transitions.setEdge(curr_state, next_state, input);
                     } else {
-                        graph.setEdge(curr_state, next_state, input);
+                        transitions.setEdge(curr_state, next_state, Integer.parseInt(input));
                     }
                 }
             }
@@ -93,7 +90,7 @@ public class NFA {
      */
     public boolean hasTransition(int startState, String input, int endState) {
         try {
-            GraphEdge n = graph.getEdge(startState, endState);
+            GraphEdge n = transitions.getEdge(startState, endState);
             GraphEdge.Type type = n.getType();
             if (type == GraphEdge.Type.LABELLED) {
                 return n.getLabel().equals(input);
