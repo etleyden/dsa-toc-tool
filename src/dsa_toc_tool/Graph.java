@@ -229,12 +229,24 @@ public class Graph {
         return setEdge(u_id, v_id, label);
     }
 
+    /**
+     * Returns the edge between two nodes, given the integer id for the nodes.
+     * @param u_id the id for the node the edge is from
+     * @param v_id the id for the node the edge is to
+     * @return the GraphEdge that connects the node. If the node does not exist, the protected field "isNull" will be true.
+     */
     public GraphEdge getEdge(int u_id, int v_id) {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
         return adj.get(u_idx).get(v_idx);
     }
 
+    /**
+     * Returns the edge between two nodes, given the string label for the nodes.
+     * @param u_label the label for the node the edge is from.
+     * @param v_label the label for the node the edge is to.
+     * @return the GraphEdge that connects the node. If the node does not exist, the protected field "isNull" will be true.
+     */
     public GraphEdge getEdge(String u_label, String v_label) {
         int u_id = ids.get(u_label);
         int v_id = ids.get(v_label);
