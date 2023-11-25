@@ -10,7 +10,7 @@ class NFATest {
     void hasTransition() {
         NFA nfa = new NFA("example_json/nfa1.json");
         assertTrue(nfa.hasTransition(1, "1", 1));
-        assertTrue(nfa.hasTransition(1, "1", 2));
+        assertTrue(nfa.hasTransition(1, "0", 1));
         assertTrue(nfa.hasTransition(2, "", 3));
         assertFalse(nfa.hasTransition(0, "", 4));
         assertFalse(nfa.hasTransition(4, "", 4));
