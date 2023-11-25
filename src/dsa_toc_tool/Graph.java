@@ -180,9 +180,11 @@ public class Graph {
     public boolean setEdge(int u_id, int v_id, int weight) {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
+        GraphEdge curr = adj.get(v_idx).get(u_idx);
+        curr.setType('w');
         if (!isDirected)
-            adj.get(v_idx).get(u_idx).setWeight(weight);
-        return adj.get(u_idx).get(v_idx).setWeight(weight);
+            curr.setWeight(weight);
+        return curr.setWeight(weight);
     }
 
     /**
@@ -210,9 +212,15 @@ public class Graph {
     public boolean setEdge(int u_id, int v_id, String label) {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
+        GraphEdge curr = adj.get(v_idx).get(u_idx);
+        if ((label.equals(""))) {
+            curr.setLabel(label);
+            return curr.setType('n');
+        }
+        curr.setType('l');
         if (!isDirected)
-            adj.get(v_idx).get(u_idx).setLabel(label);
-        return adj.get(u_idx).get(v_idx).setLabel(label);
+            curr.setLabel(label);
+        return curr.setLabel(label);
     }
 
     /**
@@ -232,7 +240,7 @@ public class Graph {
     public GraphEdge getEdge(int u_id, int v_id) {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
-        return adj.get(u_idx).get(v_idx);
+        return adj.get(v_idx).get(u_idx);
     }
 
     public GraphEdge getEdge(String u_label, String v_label) {

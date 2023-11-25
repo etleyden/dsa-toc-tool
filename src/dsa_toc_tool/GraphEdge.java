@@ -6,6 +6,7 @@ package dsa_toc_tool;
  * It should be extended (SOLID) for more specific use cases.
  */
 public class GraphEdge {
+	protected boolean isNull = true;
 
 	public enum Type {
 		NULL, WEIGHTED, LABELLED
@@ -31,6 +32,7 @@ public class GraphEdge {
 
 	/**
 	 * Sets the weight of the GraphEdge
+	 * 
 	 * @param weight
 	 * @return True if successful, False if the edge is a labelled edge and not a
 	 *         weighted one.
@@ -47,7 +49,6 @@ public class GraphEdge {
 	public Integer getWeight() {
 		return (type == Type.WEIGHTED) ? weight : null;
 	}
-
 	/**
 	 * Sets the label of the GraphEdge
 	 * 
