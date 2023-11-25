@@ -44,7 +44,7 @@ public class NFA {
      * Adds nodes to NFA's graph object according to states
      * Adds edges to nodes of NFA's graph object
      * 
-     * @param filePath path of JSON file
+     * @param filepath path of JSON file
      */
     public void parseFile(String filepath) {
         try {
@@ -98,11 +98,12 @@ public class NFA {
     public boolean hasTransition(int startState, String input, int endState) {
         try {
             GraphEdge n = graph.getEdge(startState, endState);
-            if (n.isLabel()) {
+            GraphEdge.Type type = n.getType();
+            if (type == GraphEdge.Type.LABELLED) {
                 return n.getLabel().equals(input);
-            } else if (n.isWeight()) {
+            } else if (type == GraphEdge.Type.WEIGHTED) {
                 return n.getWeight() == Integer.parseInt(input);
-            } else if (n.isNull == true) {
+            } else if (type == GraphEdge.Type.NULL) {
                 return input.equals("");
             }
         } catch (NullPointerException e) {

@@ -1,6 +1,7 @@
 import dsa_toc_tool.*;
 
 import org.junit.jupiter.api.Test;
+import EthansUtilities.EthansUtilities;
 
 import java.util.Objects;
 
