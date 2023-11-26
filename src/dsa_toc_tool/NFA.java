@@ -1,15 +1,12 @@
 package dsa_toc_tool;
 
-import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.lang.reflect.Array;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.*;
 
 public class NFA {
-    private Graph graph;
+    private Graph transitions;
     private int num_states;
     private int start_num;
     private JSONArray input_alphabet;
@@ -31,7 +28,7 @@ public class NFA {
      * Default construct for NFA that requires no .json description
      */
     public NFA() {
-        this.graph = new Graph();
+        this.transitions = new Graph();
         this.num_states = 0;
         this.start_num = 0;
         this.input_alphabet = new JSONArray();
@@ -44,7 +41,7 @@ public class NFA {
      * Adds nodes to NFA's graph object according to states
      * Adds edges to nodes of NFA's graph object
      * 
-     * @param filePath path of JSON file
+     * @param filepath path of JSON file
      */
     public void parseFile(String filepath) {
         try {
@@ -60,13 +57,13 @@ public class NFA {
             this.input_alphabet = (JSONArray) o.get("input_alphabet");
             this.start_state = (int) (long) o.get("start_state");
             this.accept_states = (JSONArray) o.get("accept_states");
-            JSONArray transitions = (JSONArray) o.get("transitions");
+            JSONArray transitions_field = (JSONArray) o.get("transitions");
             for (int i = start_num; i <= num_states; i++) {
                 // Adds nodes to graph
-                graph.addNode(i);
+                transitions.addNode(i);
             }
-            for (int i = 0; i < transitions.size(); i++) {
-                JSONArray transition = (JSONArray) transitions.get(i);
+            for (int i = 0; i < transitions_field.size(); i++) {
+                JSONArray transition = (JSONArray) transitions_field.get(i);
                 int curr_state = i + start_num;
                 for (int j = 0; j < transition.size(); j++) {
                     JSONArray pair = (JSONArray) transition.get(j);
@@ -75,9 +72,9 @@ public class NFA {
                     int next_state = (int) (long) pair.get(1);
                     // Determines whether to setEdge with weight or label
                     if (input.matches("\\d+")) {
-                        graph.setEdge(curr_state, next_state, Integer.parseInt(input));
+                        transitions.setEdge(curr_state, next_state, Integer.parseInt(input));
                     } else {
-                        graph.setEdge(curr_state, next_state, input);
+                        transitions.setEdge(curr_state, next_state, input);
                     }
                 }
             }
@@ -86,7 +83,6 @@ public class NFA {
             e.printStackTrace();
         }
     }
-
     /**
      * Verifies a transition between two states and a given input
      * 
@@ -97,12 +93,13 @@ public class NFA {
      */
     public boolean hasTransition(int startState, String input, int endState) {
         try {
-            GraphEdge n = graph.getEdge(startState, endState);
-            if (n.isLabel()) {
+            GraphEdge n = transitions.getEdge(startState, endState);
+            GraphEdge.Type type = n.getType();
+            if (type == GraphEdge.Type.LABELLED) {
                 return n.getLabel().equals(input);
-            } else if (n.isWeight()) {
+            } else if (type == GraphEdge.Type.WEIGHTED) {
                 return n.getWeight() == Integer.parseInt(input);
-            } else if (n.isNull == true) {
+            } else if (type == GraphEdge.Type.NULL) {
                 return input.equals("");
             }
         } catch (NullPointerException e) {

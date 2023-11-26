@@ -1,6 +1,5 @@
 import dsa_toc_tool.NFA;
 
-import dsa_toc_tool.NFA;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +15,6 @@ class NFATest {
         assertFalse(nfa.hasTransition(4, "", 4));
         assertFalse(nfa.hasTransition(2, "1", 3));
     }
-
     @Test
     void doesAccept() {
         NFA nfa = new NFA("example_json/nfa1.json");

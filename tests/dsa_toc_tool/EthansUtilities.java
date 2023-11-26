@@ -1,10 +1,8 @@
-import dsa_toc_tool.*;
 
-import org.junit.jupiter.api.DisplayNameGenerator;
-
-import java.nio.charset.StandardCharsets;
+package EthansUtilities;
 
 // This is my personal Java utilities class for various methods
+
 // Used in the tests --> NOT in production
 public class EthansUtilities {
     public static String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
