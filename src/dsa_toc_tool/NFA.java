@@ -60,7 +60,7 @@ public class NFA {
             JSONArray transitions_field = (JSONArray) o.get("transitions");
             for (int i = start_num; i <= num_states; i++) {
                 // Adds nodes to graph
-                transitions.addNode(i);
+                transitions.addNode(Integer.toString(i));
             }
             for (int i = 0; i < transitions_field.size(); i++) {
                 JSONArray transition = (JSONArray) transitions_field.get(i);
@@ -70,12 +70,10 @@ public class NFA {
                     // Grabs input of Edge and destination from JSON pair
                     String input = (String) pair.get(0);
                     int next_state = (int) (long) pair.get(1);
-                    // Determines whether to setEdge with weight or label
-                    if (input.matches("\\d+")) {
-                        transitions.setEdge(curr_state, next_state, Integer.parseInt(input));
-                    } else {
-                        transitions.setEdge(curr_state, next_state, input);
-                    }
+                    GraphEdge n = transitions.getEdge(curr_state, next_state);
+                    // setEdge with label
+                    String label = (n.getType() == GraphEdge.Type.NULL) ? "" : n.getLabel();
+                    transitions.setEdge(curr_state, next_state, label + input);
                 }
             }
         } catch (Exception e) {
@@ -83,6 +81,7 @@ public class NFA {
             e.printStackTrace();
         }
     }
+
     /**
      * Verifies a transition between two states and a given input
      * 
@@ -96,7 +95,7 @@ public class NFA {
             GraphEdge n = transitions.getEdge(startState, endState);
             GraphEdge.Type type = n.getType();
             if (type == GraphEdge.Type.LABELLED) {
-                return n.getLabel().equals(input);
+                return n.getLabel().contains(input);
             } else if (type == GraphEdge.Type.WEIGHTED) {
                 return n.getWeight() == Integer.parseInt(input);
             } else if (type == GraphEdge.Type.NULL) {
