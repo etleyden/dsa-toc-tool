@@ -21,6 +21,7 @@ public class DFA {
 		parsefile(filepath);
 	}
 
+
 	public void parsefile(String filepath) {
 		try {
 			JSONParser p = new JSONParser();
@@ -67,7 +68,6 @@ public class DFA {
 		}
 
 	}
-	public DFA() {}
 
 	public boolean hasTransition(int startState, char input, int endState) {
 		return false;

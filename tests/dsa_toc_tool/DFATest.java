@@ -6,13 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DFATest {
 
-    @Test
-    void parsefile() {
-        DFA d = new DFA("example_json/dfa1.json");
-    }
 
     @Test
     void hasTransition() {
+
     }
 
     @Test
