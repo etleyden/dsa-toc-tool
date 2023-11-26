@@ -8,13 +8,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.*;
 
-public class NFA extends Graph {
+public class NFA {
+    private Graph graph;
     private int num_states;
     private int start_num;
     private JSONArray input_alphabet;
     private int start_state;
     private JSONArray accept_states;
-    private JSONArray transitions;
 
     /**
      * Takes the filepath to a .json description of the NFA, and generates an
@@ -23,18 +23,28 @@ public class NFA extends Graph {
      * @param filepath the relative path to the json file.
      */
     public NFA(String filepath) {
-        super(); // added temporarily to test out build settings
+        this();
         parseFile(filepath);
     }
 
+    /**
+     * Default construct for NFA that requires no .json description
+     */
     public NFA() {
-
+        this.graph = new Graph();
+        this.num_states = 0;
+        this.start_num = 0;
+        this.input_alphabet = new JSONArray();
+        this.start_state = -1;
+        this.accept_states = new JSONArray();
     }
 
     /**
-     * Parse JSON file into NFA
+     * Parse .json description into NFA object
+     * Adds nodes to NFA's graph object according to states
+     * Adds edges to nodes of NFA's graph object
      * 
-     * @param filePath path of JSON file
+     * @param filepath path of JSON file
      */
     public void parseFile(String filepath) {
         try {
@@ -44,27 +54,30 @@ public class NFA extends Graph {
             if (!(dsa_type.equals("nfa"))) {
                 throw new Exception();
             }
+            // Parse JSON into NFA variables
             this.num_states = (int) (long) o.get("num_states");
             this.start_num = (int) (long) o.get("start_numbering");
             this.input_alphabet = (JSONArray) o.get("input_alphabet");
             this.start_state = (int) (long) o.get("start_state");
             this.accept_states = (JSONArray) o.get("accept_states");
-            this.transitions = (JSONArray) o.get("transitions");
+            JSONArray transitions = (JSONArray) o.get("transitions");
             for (int i = start_num; i <= num_states; i++) {
-                this.addNode(i);
-                System.out.println("Node " + i + " " + nodeExists(i));
+                // Adds nodes to graph
+                graph.addNode(i);
             }
             for (int i = 0; i < transitions.size(); i++) {
                 JSONArray transition = (JSONArray) transitions.get(i);
-                int curr_state = i + 1;
+                int curr_state = i + start_num;
                 for (int j = 0; j < transition.size(); j++) {
                     JSONArray pair = (JSONArray) transition.get(j);
+                    // Grabs input of Edge and destination from JSON pair
                     String input = (String) pair.get(0);
                     int next_state = (int) (long) pair.get(1);
-                    if ((input.equals(""))) {
-                        setEdge(curr_state, next_state, input);
+                    // Determines whether to setEdge with weight or label
+                    if (input.matches("\\d+")) {
+                        graph.setEdge(curr_state, next_state, Integer.parseInt(input));
                     } else {
-                        setEdge(curr_state, next_state, Integer.parseInt(input));
+                        graph.setEdge(curr_state, next_state, input);
                     }
                 }
             }
@@ -83,19 +96,18 @@ public class NFA extends Graph {
      * @return true if the transition exists, false if not
      */
     public boolean hasTransition(int startState, String input, int endState) {
-        for (int i = 0; i < transitions.size(); i++) {
-            int curr_state = i + 1;
-            if (curr_state == startState) {
-                JSONArray transition = (JSONArray) transitions.get(i);
-                for (int j = 0; j < transition.size(); j++) {
-                    JSONArray pair = (JSONArray) transition.get(j);
-                    String inp = (String) pair.get(0);
-                    int next_state = (int) (long) pair.get(1);
-                    if ((inp.equals(input)) && next_state == endState) {
-                        return true;
-                    }
-                }
+        try {
+            GraphEdge n = graph.getEdge(startState, endState);
+            GraphEdge.Type type = n.getType();
+            if (type == GraphEdge.Type.LABELLED) {
+                return n.getLabel().equals(input);
+            } else if (type == GraphEdge.Type.WEIGHTED) {
+                return n.getWeight() == Integer.parseInt(input);
+            } else if (type == GraphEdge.Type.NULL) {
+                return input.equals("");
             }
+        } catch (NullPointerException e) {
+            return false;
         }
         return false;
     }

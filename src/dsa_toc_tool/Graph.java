@@ -181,8 +181,8 @@ public class Graph {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
         if (!isDirected)
-            adj.get(v_idx).get(u_idx).setWeight(weight);
-        return adj.get(u_idx).get(v_idx).setWeight(weight);
+            adj.get(v_id).get(u_id).setWeight(weight);
+        return adj.get(u_id).get(v_id).setWeight(weight);
     }
 
     /**
@@ -211,8 +211,8 @@ public class Graph {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
         if (!isDirected)
-            adj.get(v_idx).get(u_idx).setLabel(label);
-        return adj.get(u_idx).get(v_idx).setLabel(label);
+            adj.get(v_id).get(u_id).setLabel(label);
+        return adj.get(u_id).get(v_id).setLabel(label);
     }
 
     /**
@@ -238,7 +238,7 @@ public class Graph {
     public GraphEdge getEdge(int u_id, int v_id) {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
-        return adj.get(u_idx).get(v_idx);
+        return adj.get(v_idx).get(u_idx);
     }
 
     /**
@@ -277,9 +277,9 @@ public class Graph {
             while (row_iterator.hasNext()) {
                 GraphEdge edge = row_iterator.next();
 
-                if (edge.isNull) {
+                if (edge.getType() == GraphEdge.Type.NULL) {
                     out.append("null");
-                } else if (edge.isLabel()) {
+                } else if (edge.getType() == GraphEdge.Type.LABELLED) {
                     out.append(edge.getLabel());
                 } else {
                     out.append(edge.getWeight());
