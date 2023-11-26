@@ -229,12 +229,24 @@ public class Graph {
         return setEdge(u_id, v_id, label);
     }
 
+    /**
+     * Retrieves edge object associated from vertex u to vertex v
+     * @param u_id
+     * @param v_id
+     * @return
+     */
     public GraphEdge getEdge(int u_id, int v_id) {
         int u_idx = idx.get(u_id);
         int v_idx = idx.get(v_id);
         return adj.get(v_idx).get(u_idx);
     }
 
+    /**
+     * Retrieves edge object associated from vertex u to vertex v
+     * @param u_label
+     * @param v_label
+     * @return
+     */
     public GraphEdge getEdge(String u_label, String v_label) {
         int u_id = ids.get(u_label);
         int v_id = ids.get(v_label);
