@@ -1,5 +1,6 @@
 package dsa_toc_tool;
 
+import java.util.ArrayList;
 import java.io.FileReader;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -9,9 +10,9 @@ public class NFA {
     private Graph transitions;
     private int num_states;
     private int start_num;
-    private JSONArray input_alphabet;
-    private int start_state;
-    private JSONArray accept_states;
+    private ArrayList<String> input_alphabet;
+    private String start_state;
+    private ArrayList<String> accept_states;
 
     /**
      * Takes the filepath to a .json description of the NFA, and generates an
@@ -31,9 +32,9 @@ public class NFA {
         this.transitions = new Graph();
         this.num_states = 0;
         this.start_num = 0;
-        this.input_alphabet = new JSONArray();
-        this.start_state = -1;
-        this.accept_states = new JSONArray();
+        this.input_alphabet = new ArrayList<>();
+        this.start_state = "";
+        this.accept_states = new ArrayList<>();
     }
 
     /**
@@ -54,10 +55,20 @@ public class NFA {
             // Parse JSON into NFA variables
             this.num_states = (int) (long) o.get("num_states");
             this.start_num = (int) (long) o.get("start_numbering");
-            this.input_alphabet = (JSONArray) o.get("input_alphabet");
-            this.start_state = (int) (long) o.get("start_state");
-            this.accept_states = (JSONArray) o.get("accept_states");
+            this.start_state = (String) o.get("start_state");
+            JSONArray accept_field = (JSONArray) o.get("accept_states");
+            JSONArray input_field = (JSONArray) o.get("input_alphabet");
             JSONArray transitions_field = (JSONArray) o.get("transitions");
+            // Convert JSONArray of accept states into ArrayList
+            for (int i = 0; i < accept_field.size(); i++) {
+                String c = (String) accept_field.get(i);
+                this.accept_states.add(c);
+            }
+            // Convert JSONArray of input alphabet into ArrayList
+            for (int i = 0; i < input_field.size(); i++) {
+                String c = (String) input_field.get(i);
+                this.input_alphabet.add(c);
+            }
             for (int i = start_num; i <= num_states; i++) {
                 // Adds nodes to graph
                 transitions.addNode(Integer.toString(i));
@@ -115,6 +126,7 @@ public class NFA {
      * @return the result.
      */
     public boolean doesAccept(String str) {
+
         return false;
     }
 
