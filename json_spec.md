@@ -15,9 +15,9 @@ the following states:
 |-------------------|-----------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `num_states`      | `int`     | yes      | The number of states in the state diagram                                                                                                                                                                                                                |
 | `start_numbering` | `int`     | no       | The number the nodes labels start with. Default is 0. You may want to set it to 1 instead                                                                                                                                                                |
-| `input_alphabet`  | `char[]`  | yes      | The accepted characters on the input alphabet                                                                                                                                                                                                            |
+| `input_alphabet`  | `String[]`  | yes      | The accepted characters on the input alphabet                                                                                                                                                                                                            |
 | `start_state`     | `int`     | yes      | The state where computation starts.                                                                                                                                                                                                                      |
-| `accept_states`   | `int[]`   | yes      | The state where computation decides if the string can be accepted or not.                                                                                                                                                                                |
+| `accept_states`   | `String[]`   | yes      | The state where computation decides if the string can be accepted or not.                                                                                                                                                                                |
 | `transitions`     | `int[][]` | yes      | Transition functions. Can be read as a table where the index of each column corresponds to an index in the `input_alphabet`, and the transition is *from* the state with the same label as the index of the row, *to* the state recorded in the array.   |
 
 ## NFA
@@ -25,6 +25,15 @@ the following states:
 The NFA JSON spec also closely follows the formal description of an NFA. As such, it is also very similar to the 
 specification for a DFA. The only difference is obviously that `dsa_type` needs to be `nfa`, and the `transitions` entry
 will reflect the more complex nature of NFAs in general.
+
+| key               | data type | required | description                                                                                                                                                                                                                                              |
+|-------------------|-----------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `num_states`      | `int`     | yes      | The number of states in the state diagram                                                                                                                                                                                                                |
+| `start_numbering` | `int`     | no       | The number the nodes labels start with. Default is 0. You may want to set it to 1 instead                                                                                                                                                                |
+| `input_alphabet`  | `String[]`  | yes      | The accepted characters on the input alphabet                                                                                                                                                                                                            |
+| `start_state`     | `String`     | yes      | The state where computation starts.                                                                                                                                                                                                                      |
+| `accept_states`   | `String[]`   | yes      | The state where computation decides if the string can be accepted or not.                                                                                                                                                                                |
+| `transitions`     | `3D Array` | yes      | Each array index contain input character and the next state
 
 #### `transitions`
 

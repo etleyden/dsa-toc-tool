@@ -31,14 +31,15 @@ public class GraphEdge {
 
 	/**
 	 * Sets the weight of the GraphEdge
+	 * 
 	 * @param weight
 	 * @return True if successful, False if the edge is a labelled edge and not a
 	 *         weighted one.
 	 */
 	public boolean setWeight(int weight) {
-		if(type == Type.LABELLED)
+		if (type == Type.LABELLED)
 			return false;
-		if(type == Type.NULL)
+		if (type == Type.NULL)
 			type = Type.WEIGHTED;
 		this.weight = weight;
 		return true;
@@ -56,9 +57,9 @@ public class GraphEdge {
 	 *         labelled edge)
 	 */
 	public boolean setLabel(String label) {
-		if(type == Type.WEIGHTED)
+		if (type == Type.WEIGHTED)
 			return false;
-		if(type == Type.NULL)
+		if (type == Type.NULL)
 			type = Type.LABELLED;
 		this.label = label;
 		return true;
