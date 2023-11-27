@@ -20,6 +20,7 @@ public class DFA {
 	public DFA(String filepath) {
 		parsefile(filepath);
 	}
+	public DFA() {}
 
 
 	public void parsefile(String filepath) {

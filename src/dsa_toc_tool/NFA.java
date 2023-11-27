@@ -127,6 +127,8 @@ public class NFA {
      */
     public boolean doesAccept(String str) {
 
+
+
         return false;
     }
 
